@@ -14,7 +14,7 @@ The Market Insight & Forecasting Tool is a powerful analysis tool designed to pr
 
 The Market Insight & Forecasting Tool is hosted on Streamlit, making it easy to access and use through any web browser. Follow the link below to start using the tool:
 
-[Launch Market Insight & Forecasting Tool](https://your-streamlit-app-link)
+[Launch Market Insight & Forecasting Tool](https://market-filter-forecaster.streamlit.app/)
 
 ## How to Use
 
