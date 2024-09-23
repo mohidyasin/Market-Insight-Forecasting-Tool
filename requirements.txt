@@ -2,3 +2,4 @@ streamlit==1.22.0
 pandas==1.5.3
 numpy==1.23.5
 yfinance==0.2.18
+--only-binary=numpy,pandas
