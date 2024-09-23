@@ -1,6 +1,14 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import yfinance as yf
+import sys
+
+st.write(f"Python version: {sys.version}")
+st.write(f"Streamlit version: {st.__version__}")
+st.write(f"Pandas version: {pd.__version__}")
+st.write(f"NumPy version: {np.__version__}")
+st.write(f"yfinance version: {yf.__version__}")
 
 def main():
     st.title("Minimal Streamlit App Test")
