@@ -6,4 +6,4 @@ numpy
 streamlit
 websocket-client
 setuptools
-git+https://github.com/StreamAlpha/tvdatafeed.git
+git+https://github.com/rongardF/tvdatafeed
