@@ -16,9 +16,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const http = require('https');
+            const https = require('https');
             const options = {
-              hostname: 'https://market-insight-forecasting-tool-fzt2k86xrhjjm9ylkhxarj.streamlit.app/', 
+              hostname: 'market-insight-forecasting-tool-fzt2k86xrhjjm9ylkhxarj.streamlit.app',
               path: '/',
               method: 'GET',
               timeout: 30000, // 30 seconds timeout
@@ -26,7 +26,7 @@ jobs:
             
             console.log('Pinging app to keep it alive...');
             
-            const req = http.request(options, (res) => {
+            const req = https.request(options, (res) => {
               console.log(`STATUS: ${res.statusCode}`);
               if (res.statusCode >= 200 && res.statusCode < 300) {
                 console.log('Successfully pinged the app!');
