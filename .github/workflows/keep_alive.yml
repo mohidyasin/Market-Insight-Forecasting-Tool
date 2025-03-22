@@ -1,1 +1,50 @@
+name: Keep Streamlit App Alive
 
+on:
+  schedule:
+    # Run every day at 12:00 UTC
+    - cron: '0 12 * * *'
+  
+  # Optional: Allow manual trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit App URL
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const http = require('https');
+            const options = {
+              hostname: 'yourapp.streamlit.app', // Replace with your app's domain
+              path: '/',
+              method: 'GET',
+              timeout: 30000, // 30 seconds timeout
+            };
+            
+            console.log('Pinging app to keep it alive...');
+            
+            const req = http.request(options, (res) => {
+              console.log(`STATUS: ${res.statusCode}`);
+              if (res.statusCode >= 200 && res.statusCode < 300) {
+                console.log('Successfully pinged the app!');
+              } else {
+                console.error(`Failed to ping app with status code: ${res.statusCode}`);
+                process.exit(1);
+              }
+            });
+            
+            req.on('error', (error) => {
+              console.error(`Error pinging app: ${error.message}`);
+              process.exit(1);
+            });
+            
+            req.on('timeout', () => {
+              console.error('Request timed out');
+              req.destroy();
+              process.exit(1);
+            });
+            
+            req.end();
