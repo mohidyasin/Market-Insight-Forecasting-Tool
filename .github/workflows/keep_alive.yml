@@ -22,13 +22,16 @@ jobs:
               path: '/',
               method: 'GET',
               timeout: 30000, // 30 seconds timeout
+              // Don't follow redirects automatically
+              followRedirects: false
             };
             
             console.log('Pinging app to keep it alive...');
             
             const req = https.request(options, (res) => {
               console.log(`STATUS: ${res.statusCode}`);
-              if (res.statusCode >= 200 && res.statusCode < 300) {
+              // Consider both 2xx and 3xx as success
+              if ((res.statusCode >= 200 && res.statusCode < 400)) {
                 console.log('Successfully pinged the app!');
               } else {
                 console.error(`Failed to ping app with status code: ${res.statusCode}`);
