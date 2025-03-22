@@ -18,7 +18,7 @@ jobs:
           script: |
             const http = require('https');
             const options = {
-              hostname: 'yourapp.streamlit.app', // Replace with your app's domain
+              hostname: 'https://market-insight-forecasting-tool-fzt2k86xrhjjm9ylkhxarj.streamlit.app/', 
               path: '/',
               method: 'GET',
               timeout: 30000, // 30 seconds timeout
