@@ -1,5 +1,4 @@
 import pandas as pd
-import pandas_ta as ta
 from scipy.stats import linregress
 import seaborn as sns
 import matplotlib.pyplot as plt
