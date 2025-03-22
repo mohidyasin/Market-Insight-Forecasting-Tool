@@ -297,7 +297,7 @@ def main():
                 data['ATR_14_rank'] = data['ATR_14'].rolling(window=252).apply(lambda x: x.rank(pct=True)[-1]).round(2)
                 
                 # Volume indicators
-                data['Volume_avg_5d_ema'] = ta.ema(data['Volume'], length=5).round(2)
+                data['Volume_avg_5d_ema'] = ema(data['Volume'], length=5).round(2)
                 data['Volume_ema_slope'] = calculate_slope(data['Volume_avg_5d_ema'], 3)
                 data['Volume_ema_slope'] = data['Volume_ema_slope'].round(2)
                 data['Volume_avg_5d_ema_rank'] = data['Volume_avg_5d_ema'].rolling(window=252).apply(lambda x: x.rank(pct=True)[-1]).round(2)
