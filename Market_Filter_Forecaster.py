@@ -190,6 +190,20 @@ def plot_samples(samples, forward_return_period, mean_resampled, median_resample
     ax.set_title(f'{ticker} Probability Distribution of {forward_return_period} Forward Returns for {next_day_str}')
     ax.grid(True)
 
+# Custom implementation of RSI
+def rsi(series, length=14):
+    delta = series.diff()
+    up = delta.clip(lower=0)
+    down = -1 * delta.clip(upper=0)
+    ema_up = up.ewm(com=length-1, adjust=False).mean()
+    ema_down = down.ewm(com=length-1, adjust=False).mean()
+    rs = ema_up / ema_down
+    return 100 - (100 / (1 + rs))
+
+# Custom implementation of EMA
+def ema(series, length=20):
+    return series.ewm(span=length, adjust=False).mean()
+
 def main():
     st.title("Market 5-Day Forecast Tool")
     
@@ -265,12 +279,12 @@ def main():
                 st.success(f"Retrieved {len(data)} days of historical data up to {target_date_str}")
                 
                 # Calculate technical indicators
-                data['RSI_14'] = ta.rsi(data['Close'], length=14)
+                data['RSI_14'] = rsi(data['Close'], length=14)
                 data['5d_avg_RSI'] = data['RSI_14'].rolling(window=5).mean().round(2)
                 data['RSI_14_pct_change'] = data['RSI_14'].pct_change().mul(100).round(2)
                 data['RSI_14_Slope'] = calculate_slope(data['RSI_14'], 3)
                 data['RSI_14_Slope'] = data['RSI_14_Slope'].round(2)
-                data['20d_EMA'] = ta.ema(data['Close'], length=20).round(2)
+                data['20d_EMA'] = ema(data['Close'], length=20).round(2)
                 data['Pct_Distance_to_EMA'] = ((data['Close'] - data['20d_EMA']) / data['20d_EMA']).mul(100).round(2)
                 data['EMA_Slope'] = calculate_slope(data['20d_EMA'], 3)
                 data['EMA_Slope'] = data['EMA_Slope'].round(2)
