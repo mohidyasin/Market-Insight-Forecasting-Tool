@@ -6,3 +6,4 @@ numpy
 streamlit
 websocket-client
 setuptools
+tvDatafeed
