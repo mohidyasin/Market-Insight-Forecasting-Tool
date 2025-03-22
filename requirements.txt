@@ -1,9 +1,9 @@
-streamlit
 pandas
-numpy
-yfinance
 pandas-ta
 scipy
 seaborn
 matplotlib
-mplfinance
+numpy
+tvdatafeed
+streamlit
+statsmodels
