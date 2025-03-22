@@ -13,41 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Streamlit App URL
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const https = require('https');
-            const options = {
-              hostname: 'market-insight-forecasting-tool-fzt2k86xrhjjm9ylkhxarj.streamlit.app',
-              path: '/',
-              method: 'GET',
-              timeout: 30000, // 30 seconds timeout
-              // Don't follow redirects automatically
-              followRedirects: false
-            };
-            
-            console.log('Pinging app to keep it alive...');
-            
-            const req = https.request(options, (res) => {
-              console.log(`STATUS: ${res.statusCode}`);
-              // Consider both 2xx and 3xx as success
-              if ((res.statusCode >= 200 && res.statusCode < 400)) {
-                console.log('Successfully pinged the app!');
-              } else {
-                console.error(`Failed to ping app with status code: ${res.statusCode}`);
-                process.exit(1);
-              }
-            });
-            
-            req.on('error', (error) => {
-              console.error(`Error pinging app: ${error.message}`);
-              process.exit(1);
-            });
-            
-            req.on('timeout', () => {
-              console.error('Request timed out');
-              req.destroy();
-              process.exit(1);
-            });
-            
-            req.end();
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -m 60 https://market-insight-forecasting-tool-fzt2k86xrhjjm9ylkhxarj.streamlit.app/)
+          echo "Received status code: $STATUS"
+          if [[ $STATUS -ge 200 && $STATUS -lt 400 ]]; then
+            echo "Successfully pinged the app!"
+            exit 0
+          else
+            echo "Failed with status code: $STATUS"
+            exit 1
+          fi
